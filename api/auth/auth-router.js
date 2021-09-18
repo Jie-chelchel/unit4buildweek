@@ -30,7 +30,7 @@ router.post("/login", validateInput, (req, res, next) => {
           token,
         });
       } else {
-        res.status(401).json({ message: "invalid credentials" });
+        res.status(401).json({ message: "invalid email or password" });
       }
     })
     .catch((err) => {
