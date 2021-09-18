@@ -25,9 +25,23 @@ function removeItem(id) {
   return db("items").where({ item_id: id }).del();
 }
 
+function update(id, changes) {
+  return db("items")
+    .where({ item_id: id })
+    .update(changes, [
+      "location",
+      "item_name",
+      "description",
+      "price",
+      "unit",
+      "item_id",
+    ]);
+}
+
 module.exports = {
   getAllItems,
   addItem,
   findById,
   removeItem,
+  update,
 };
