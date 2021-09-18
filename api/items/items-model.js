@@ -38,10 +38,17 @@ function update(id, changes) {
     ]);
 }
 
+function findItemByListingUserId(user_id) {
+  return db("items")
+    .leftJoin("users", "items.user_id", "users.user_id")
+    .where({ "users.user_id": user_id });
+}
+
 module.exports = {
   getAllItems,
   addItem,
   findById,
   removeItem,
   update,
+  findItemByListingUserId,
 };

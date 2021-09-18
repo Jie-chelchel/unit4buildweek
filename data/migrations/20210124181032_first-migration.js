@@ -1,3 +1,5 @@
+const { table } = require("console");
+
 exports.up = function (knex) {
   return knex.schema
     .createTable("users", (tbl) => {
@@ -13,6 +15,14 @@ exports.up = function (knex) {
       tbl.string("description").notNullable();
       tbl.decimal("price", 6, 2).notNullable();
       tbl.string("unit").notNullable();
+      tbl
+        .integer("user_id")
+        .unsigned()
+        .notNullable()
+        .references("user_id")
+        .inTable("users")
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE");
     });
 };
 

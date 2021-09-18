@@ -21,6 +21,7 @@ exports.seed = async function (knex) {
       description: "New crop black beans, medium size.",
       price: "2.99",
       unit: "lb",
+      user_id: "1",
     },
     {
       location: "Waterfall Market, Durban",
@@ -28,6 +29,7 @@ exports.seed = async function (knex) {
       description: "Small size.",
       price: "1.99",
       unit: "lb",
+      user_id: "1",
     },
   ]);
 };

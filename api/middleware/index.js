@@ -18,6 +18,15 @@ const userEmailExist = async (req, res, next) => {
     next();
   }
 };
+const checkUserId = async (req, res, next) => {
+  const allUsers = await Users.getAllUsers();
+  const userIdExist = allUsers.find((u) => u.user_id == req.params.user_id);
+  if (!userIdExist) {
+    res.status(400).json({ message: "User doesn't exist" });
+  } else {
+    next();
+  }
+};
 
 async function checkItemId(req, res, next) {
   try {
@@ -37,4 +46,5 @@ module.exports = {
   validateInput,
   userEmailExist,
   checkItemId,
+  checkUserId,
 };

@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const Items = require("./items-model");
-const { checkItemId } = require("../middleware");
+const { checkItemId, checkUserId } = require("../middleware");
 router.get("/", (req, res, next) => {
   Items.getAllItems()
     .then((items) => {
@@ -37,6 +37,16 @@ router.delete("/:id", checkItemId, (req, res, next) => {
   Items.removeItem(req.params.id)
     .then(() => {
       res.status(200).json({ message: "The item has been removed" });
+    })
+    .catch((error) => {
+      next(error);
+    });
+});
+
+router.get("/:user_id/listed-items", checkUserId, (req, res, next) => {
+  Items.findItemByListingUserId(req.params.user_id)
+    .then((messages) => {
+      res.status(200).json(messages);
     })
     .catch((error) => {
       next(error);
