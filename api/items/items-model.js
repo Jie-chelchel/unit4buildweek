@@ -5,7 +5,7 @@ function getAllItems() {
 }
 
 function findById(id) {
-  return db("items").where({ id }).first();
+  return db("items").where({ item_id: id }).first();
 }
 
 async function addItem(item) {
@@ -20,8 +20,14 @@ async function addItem(item) {
 
   return newItem;
 }
+
+function removeItem(id) {
+  return db("items").where({ item_id: id }).del();
+}
+
 module.exports = {
   getAllItems,
   addItem,
   findById,
+  removeItem,
 };

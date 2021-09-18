@@ -1,4 +1,5 @@
 const Users = require("../users/users-model.js");
+const Items = require("../items/items-model");
 
 const validateInput = (req, res, next) => {
   const { user_email, password } = req.body;
@@ -18,7 +19,22 @@ const userEmailExist = async (req, res, next) => {
   }
 };
 
+async function checkItemId(req, res, next) {
+  try {
+    const { id } = req.params;
+    const possibleItem = await Items.findById(id);
+    if (possibleItem) {
+      req.item = possibleItem;
+      next();
+    } else {
+      res.status(400).json({ message: "Item doesn't exist" });
+    }
+  } catch (err) {
+    next(err);
+  }
+}
 module.exports = {
   validateInput,
   userEmailExist,
+  checkItemId,
 };
