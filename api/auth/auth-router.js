@@ -3,6 +3,7 @@ const router = require("express").Router();
 const { validateInput, userEmailExist } = require("../middleware");
 const Users = require("../users/users-model.js");
 const tokenBuilder = require("./token-builder");
+
 router.post("/register", userEmailExist, (req, res, next) => {
   let user = req.body;
 
