@@ -11,9 +11,7 @@ server.use(express.json());
 
 server.use("/api/users", usersRouter);
 server.use("/api/auth", authRouter);
-server.use("/", (req, res) => {
-  res.send("Hello");
-});
+
 server.use(helmet());
 
 module.exports = server;
