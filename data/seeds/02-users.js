@@ -16,18 +16,14 @@ exports.seed = async function (knex) {
   ]);
   await knex("items").insert([
     {
-      location_city: "Cape Town",
-      location_street: "Sunset St",
-      location_zip: "7134",
+      location: "Sunset Market, Cape Town",
       item_name: "Black beans",
       description: "New crop black beans, medium size.",
       price: "2.99",
       unit: "lb",
     },
     {
-      location_city: "Durban",
-      location_street: "Waterfall St",
-      location_zip: "7123",
+      location: "Waterfall Market, Durban",
       item_name: "Lemons",
       description: "Small size.",
       price: "1.99",

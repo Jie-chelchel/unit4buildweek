@@ -8,9 +8,7 @@ exports.up = function (knex) {
     })
     .createTable("items", (tbl) => {
       tbl.increments("item_id");
-      tbl.string("location_city", 128).notNullable();
-      tbl.string("location_street", 128).notNullable();
-      tbl.string("location_zip", 128).notNullable();
+      tbl.string("location", 1280).notNullable();
       tbl.string("item_name", 256).notNullable();
       tbl.string("description").notNullable();
       tbl.decimal("price", 6, 2).notNullable();

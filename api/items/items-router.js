@@ -9,4 +9,14 @@ router.get("/", (req, res, next) => {
     .catch((err) => next(err));
 });
 
+router.post("/", (req, res, next) => {
+  Items.addItem(req.body)
+    .then((item) => {
+      res.status(201).json(item);
+    })
+    .catch((error) => {
+      next(error);
+    });
+});
+
 module.exports = router;
