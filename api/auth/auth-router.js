@@ -1,23 +1,41 @@
 const bcrypt = require("bcryptjs");
 const router = require("express").Router();
-
+const { validateInput, userEmailExist } = require("../middleware");
 const Users = require("../users/users-model.js");
-
-router.post("/register", (req, res, next) => {
+const tokenBuilder = require("./token-builder");
+router.post("/register", userEmailExist, (req, res, next) => {
   let user = req.body;
 
-  // bcrypting the password before saving
-  const rounds = process.env.BCRYPT_ROUNDS || 8; // 2 ^ 8
+  const rounds = process.env.BCRYPT_ROUNDS || 8;
   const hash = bcrypt.hashSync(user.password, rounds);
 
-  // never save the plain text password in the db
   user.password = hash;
 
   Users.insertUser(user)
     .then((saved) => {
       res.status(201).json({ message: `Welcome, ${saved.user_email}` });
     })
-    .catch(next); // our custom err handling middleware in server.js will trap this
+    .catch(next);
+});
+
+router.post("/login", validateInput, (req, res, next) => {
+  let { user_email, password } = req.body;
+  Users.findBy({ user_email })
+    .then(([user]) => {
+      if (user && bcrypt.compareSync(password, user.password)) {
+        const token = tokenBuilder(user);
+        res.status(200).json({
+          message: `welcome, ${user.user_email}`,
+          role_name: user.role_name,
+          token,
+        });
+      } else {
+        res.status(401).json({ message: "invalid credentials" });
+      }
+    })
+    .catch((err) => {
+      next(err);
+    });
 });
 
 module.exports = router;

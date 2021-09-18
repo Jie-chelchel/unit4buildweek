@@ -13,7 +13,11 @@ function getAllUsers() {
   return db("users").select("user_id", "user_email", "role_name");
 }
 
+function findBy(filter) {
+  return db("users").where(filter);
+}
 module.exports = {
   insertUser,
   getAllUsers,
+  findBy,
 };
