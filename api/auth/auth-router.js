@@ -28,6 +28,7 @@ router.post("/login", validateInput, (req, res, next) => {
         res.status(200).json({
           message: `welcome, ${user.user_email}`,
           role_name: user.role_name,
+          user_id: user.user_id,
           token,
         });
       } else {
