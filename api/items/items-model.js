@@ -41,6 +41,15 @@ function update(id, changes) {
 function findItemByListingUserId(user_id) {
   return db("items")
     .leftJoin("users", "items.user_id", "users.user_id")
+    .select(
+      "items.item_name",
+      "items.location",
+      "items.description",
+      "items.item_id",
+      "items.price",
+      "items.unit",
+      "items.user_id"
+    )
     .where({ "users.user_id": user_id });
 }
 
